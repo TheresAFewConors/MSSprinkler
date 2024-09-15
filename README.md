@@ -3,6 +3,7 @@
 MSSprinkler is a password spraying utility for organizations to test their M365 accounts from an external perspective. It employs a 'low-and-slow' approach to avoid locking out accounts, and provides verbose information related to accounts and tenant information. 
 
 ## Contents
+- [Description](#description)
 - [Current Feature](#current-features)
 - [Installation](#install-and-usage)
 - [Help](#help)
