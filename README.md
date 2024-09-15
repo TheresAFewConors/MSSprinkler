@@ -14,7 +14,7 @@ MSSprinkler is written in PowerShell and can be imported directly as a module. I
 ## Current Features
 - Automatically spray a list of M365 accounts with a password list.
 - Low-and-slow approach to avoid locking out accounts.
-- Smart detect accounts that do not exist or are locked out to reduce unnecessary attempts.
+- Smart detect accounts that do not exist or are locked out, skipping over these to reduce unnecessary traffic and speed up testing.
 - Ability to override the default threshold to 'go loud'.
 - Verbose output, revealing additional information about accounts
   - Detect if an account is locked out
