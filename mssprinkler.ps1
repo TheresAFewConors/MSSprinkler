@@ -1,3 +1,4 @@
+function Invoke-MSSprinkler{
 <#
 .Synopsis
     MSSprinkler is a password spraying utility that targets M365 accounts. It employs a 'low-and-slow' approach to avoid locking out accounts, and provides verbose information related to accounts / tenant information.
@@ -104,3 +105,4 @@ $errorResonseValues = @{
     AADSTS50158 = "MFA detected for user (External Application)"
 }
 
+}
