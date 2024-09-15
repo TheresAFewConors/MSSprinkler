@@ -49,3 +49,8 @@ password2
 ...
 password10
 ```
+
+Additional help can be viewed within the tool via PowerShells built-in module:
+```PowerShell
+Get-Help .\mssprinkler.ps1 -detailed
+```
