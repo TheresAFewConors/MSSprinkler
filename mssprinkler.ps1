@@ -94,7 +94,7 @@ for ($counter=0; $counter -lt $usernames.length; $counter++) {
             # MFA
             ElseIf($responseCode -match "AADSTS50076")
             {
-                Write-Host -ForegroundColor "Cyan" "[*] Password for $un is correct but user has MFA enabled (DUO or MS)"
+                Write-Host -ForegroundColor "Cyan" "[*] Password $passes for $un is correct but user has MFA enabled (DUO or MS)"
                 break
             }
         }
