@@ -9,27 +9,27 @@ MSSprinkler is a password spraying utility for organizations to test their M365 
 - [Help](#help)
 
 ## Description
-MSSprinkler is written in PowerShell and can be imported directly as a module. It has no other dependencies. It relies on the verbose error messaging provided by Microsoft to identify additional information beyond standard password spray success or failed attempts. MSSprinkler also allows for a configurable threshold to prevent locking out accounts by mistake. By default, this is set to 8 (n-2 under Microsoft's default) however this can be adjusted based on the organizations lockout policy.
+MSSprinkler is written in PowerShell and can be imported directly as a module. It has no other dependencies. MSSprinkler relies on the verbose error messaging provided by Microsoft to identify additional information beyond standard password spray success or failed authentication attempts, which allows for the gathering of additional information related to the user account MSSprinkler also allows for a configurable threshold to prevent locking out accounts by mistake. By default, this is set to 8 (n-2 under Microsoft's default) however this can be adjusted based on the organizations lockout policy. Additionally, successful sign-in to an account with MFA enabled will not produce an MFA push to the user, allowing for covert information gathering.
 
 ## Current Features
 - Automatically spray a list of M365 accounts with a password list.
 - Low-and-slow approach to avoid locking out accounts.
 - Smart detect accounts that do not exist or are locked out, skipping over these to reduce unnecessary traffic and speed up testing.
-- Ability to override the default threshold to 'go loud'.
-- Verbose output, revealing additional information about accounts
-  - Detect if an account is locked out
-  - Detect if a user exists in the tenant or not
-  - Detect if MFA is in use for a given user (beta)
+- Ability to override the default threshold to better match the organizations policy, if required.
+- Verbose output, revealing additional information about accounts:
+  - Detect if an account is locked out.
+  - Detect if a user exists in the tenant or not.
+  - Detect if MFA is in use for a given user without triggering the MFA push.
 
 ## Install and Usage
 ```PowerShell
 # Import the module
 Import-Module MSSprinkler.ps1
 
-# Spray using a provided userlist and password list only, default URL and threshold
+# Spray using a provided userlist and password list, default URL and threshold
 Invoke-MSSprinkler -user userlist.txt -pass passwordlist.txt
 
-# Spray using a provided userlist and password list only, increase threshold to 12 attempts on an account per min
+# Spray using a provided userlist and password list, increase threshold to 12 attempts on an account per min
 Invoke-MSSprinkler -user userlist.txt -pass passwordlist.txt -threshold 12
 ```
 
@@ -48,4 +48,9 @@ password1
 password2
 ...
 password10
+```
+
+Additional help can be viewed within the tool via PowerShells built-in module:
+```PowerShell
+Get-Help .\mssprinkler.ps1 -detailed
 ```
