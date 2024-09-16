@@ -1,5 +1,5 @@
 
-![](images/cybermaxx_logo.png)
+<p align="center"><a href="https://www.cybermaxx.com/?utm_source=github&utm_medium=githublink&utm_campaign=mssprinkler&utm_id=github"><img src="images/cybermaxx_logo.png"></img></a></p>
 MSSprinkler is sponsored by CyberMaxx.
 
 
