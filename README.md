@@ -26,10 +26,10 @@ MSSprinkler is written in PowerShell and can be imported directly as a module. I
 # Import the module
 Import-Module MSSprinkler.ps1
 
-# Spray using a provided userlist and password list only, default URL and threshold
+# Spray using a provided userlist and password list, default URL and threshold
 Invoke-MSSprinkler -user userlist.txt -pass passwordlist.txt
 
-# Spray using a provided userlist and password list only, increase threshold to 12 attempts on an account per min
+# Spray using a provided userlist and password list, increase threshold to 12 attempts on an account per min
 Invoke-MSSprinkler -user userlist.txt -pass passwordlist.txt -threshold 12
 ```
 
