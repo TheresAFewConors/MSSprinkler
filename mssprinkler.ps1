@@ -85,7 +85,6 @@ for ($counter=0; $counter -lt $usernames.length; $counter++) {
             {
                 Write-Host "    The password for $un appears to be incorrect."
                 $result = "Failure"
-                # username isn't working correctly yet
                 $sprayResult += "$datetime, $result, $un, $passes"
             }
             # Account Locked
