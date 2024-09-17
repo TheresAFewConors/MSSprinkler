@@ -65,5 +65,11 @@ Additional help can be viewed within the tool via PowerShells built-in module:
 Get-Help .\mssprinkler.ps1 -detailed
 ```
 
+Timestamps in the output file are in UTC timezone with the applicable offset for the local user, eg for 2:11pm local time:
+```
+09/17/2024 13:11 +01
+```
+
+
 ## Disclaimer
 This tool is to be used only against accounts that you either own or have permission to test during legitimate penetration tests or internal assessments. The author accepts no liability for actions taken by its users.  
