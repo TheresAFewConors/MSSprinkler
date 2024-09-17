@@ -40,7 +40,7 @@ Import-Module MSSprinkler.ps1
 Invoke-MSSprinkler -user userlist.txt -pass passwordlist.txt
 
 # Spray using a provided userlist and password list, increase threshold to 12 attempts per min and output results to output.csv
-Invoke-MSSprinkler -user userlist.txt -pass passwordlist.txt -threshold 12 -output output.csv
+Invoke-MSSprinkler -user userlist.txt -pass passwordlist.txt -threshold 12 -output .\output.csv
 ```
 
 ## Help
