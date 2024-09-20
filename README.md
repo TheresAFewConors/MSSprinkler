@@ -70,6 +70,9 @@ Timestamps in the output file are in UTC timezone with the applicable offset for
 09/17/2024 13:11 +01
 ```
 
+## Reporting An Issue
+
+If you encounter an issue with an unhandled error MSSprinkler will provide you with the error code. Please open an issue and reference this error code so that it can be added and handled correctly.
 
 ## Disclaimer
 This tool is to be used only against accounts that you either own or have permission to test during legitimate penetration tests or internal assessments. The author accepts no liability for actions taken by its users.  
