@@ -36,6 +36,10 @@ MSSprinkler is written in PowerShell and can be imported directly as a module. I
 # Import the module
 Import-Module MSSprinkler.ps1
 
+# Use the module
+Invoke-MSSprinkler 
+
+# EXAMPLE USAGE
 # Spray using a provided userlist and password list, default URL and threshold
 Invoke-MSSprinkler -user userlist.txt -pass passwordlist.txt
 
