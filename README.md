@@ -1,4 +1,18 @@
 
+
+
+
+
+<div align="center">
+
+  <a href="">[![Made with - PowerShell](https://img.shields.io/badge/Made_with-PowerShell-blue)](https://github.com/theresafewconors/mssprinkler)</a>
+  <a href="">[![License - MIT](https://img.shields.io/badge/License-MIT-yellow)](https://github.com/theresafewconors/mssprinkler)</a>
+  <a href="">[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Ftheresafewconors%2Fmssprinkler&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)</a>
+  <a href="">[![Current Version](https://img.shields.io/badge/Current_Version-0.12-lightblue)](https://github.com/theresafewconors/mssprinkler)</a>
+
+</div>
+
+
 <p align="center"><a href="https://www.cybermaxx.com/?utm_source=github&utm_medium=githublink&utm_campaign=mssprinkler&utm_id=github"><img src="images/cybermaxx_logo.png"></img></a></p>
 MSSprinkler is sponsored by CyberMaxx.
 
