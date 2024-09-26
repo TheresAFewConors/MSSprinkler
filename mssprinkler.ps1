@@ -115,7 +115,7 @@ for ($counter=0; $counter -lt $usernames.length; $counter++) {
             ElseIf($errRes -match "AADSTS50076")
             {
                 Write-Host -ForegroundColor "Cyan" "[*] Password for $un is correct but user has MFA enabled (DUO or MS)"
-                $result = "Success, MFA Blocked"
+                $result = "Success: MFA Blocked"
                 $sprayResult += "$datetime, $result, $un, $passes"
                 break
             }
