@@ -43,7 +43,7 @@ MSSprinkler is written in PowerShell and can be imported directly as a module. I
   - Detect if an account is locked out.
   - Detect if a user exists in the tenant or not.
   - Detect if MFA is in use for a given user without triggering the MFA push.
-- Output and store results into a file 	
+- Output and store results into a csv file.
 
 ## Install and Usage
 ```PowerShell
