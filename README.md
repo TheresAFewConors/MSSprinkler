@@ -20,7 +20,7 @@ MSSprinkler is sponsored by CyberMaxx.
 
 # Overview
 
-MSSprinkler is a password spraying utility for organizations to test their M365 accounts from an external perspective. It employs a 'low-and-slow' approach to avoid locking out accounts, and provides verbose information related to accounts and tenant information. 
+MSSprinkler is a password spraying utility for organizations to test their Microsoft Online accounts from an external perspective. It employs a 'low-and-slow' approach to avoid locking out accounts, and provides verbose information related to accounts and tenant information. 
 
 ## Contents
 - [Description](#description)
@@ -35,7 +35,7 @@ MSSprinkler is written in PowerShell and can be imported directly as a module. I
 ![](/images/Animation.gif)
 
 ## Current Features
-- Automatically spray a list of M365 accounts with a password list.
+- Automatically spray a list of Microsoft Online accounts with a password list.
 - Low-and-slow approach to avoid locking out accounts.
 - Smart detect accounts that do not exist or are locked out, skipping over these to reduce unnecessary traffic and speed up testing.
 - Ability to override the default threshold to better match the organizations policy, if required.
