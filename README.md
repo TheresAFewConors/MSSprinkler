@@ -36,6 +36,8 @@ MSSprinkler is written in PowerShell and can be imported directly as a module. I
 
 ## Current Features
 - Automatically spray a list of Microsoft Online accounts with a password list.
+- Automatically retrieve and log the tenant ID associated with the domain and store in JSON format.
+- Automatically retrieve the access & refresh tokens for successful user sign-ins, providing long-term persistence.
 - Low-and-slow approach to avoid locking out accounts.
 - Smart detect accounts that do not exist or are locked out, skipping over these to reduce unnecessary traffic and speed up testing.
 - Ability to override the default threshold to better match the organizations policy, if required.
