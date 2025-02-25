@@ -13,12 +13,17 @@
 </div>
 
 
-<p align="center"><a href="https://www.cybermaxx.com/?utm_source=github&utm_medium=githublink&utm_campaign=mssprinkler&utm_id=github"><img src="images/cybermaxx_logo.png"></img></a></p>
-MSSprinkler is sponsored by CyberMaxx.
+<div align="center">
+  <a href="https://www.cybermaxx.com/?utm_source=github&utm_medium=githublink&utm_campaign=mssprinkler&utm_id=github">
+  <img src="images/cybermaxx_logo.png" width="500">
+    
+MSSprinkler is sponsored by CyberMaxx.</a>
+</div>
 
 
 
-# Overview
+
+# MSSprinkler Overview
 
 MSSprinkler is a password spraying utility for organizations to test their Microsoft Online accounts from an external perspective. It employs a 'low-and-slow' approach to avoid locking out accounts, and provides verbose information related to accounts and tenant information. 
 
