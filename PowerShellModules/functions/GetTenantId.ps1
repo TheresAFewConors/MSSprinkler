@@ -3,73 +3,65 @@ function Get-TenantId {
         [string[]]$users
     )
 
-    # Initialize the domain cache if it doesn't exist yet
+    $cacheFile = ".\jsonModules\domainCache.json"
+    $validatedUsersFile = ".\validated_users.txt"
+
     if (-not $global:domainCache) {
-        $global:domainCache = @{}
+        if (Test-Path $cacheFile) {
+            $global:domainCache = Get-Content $cacheFile | ConvertFrom-Json
+        } else {
+            $global:domainCache = @{}
+        }
     }
 
-    # Extract unique domains from the user list
-    $uniqueDomains = $users | ForEach-Object {
-        ($_ -split '@')[1]  # Extract the domain from the email
+    $alreadyValidated = @()
+    if (Test-Path $validatedUsersFile) {
+        $alreadyValidated = Get-Content $validatedUsersFile
+    }
+
+    $newUsers = $users | Where-Object { $_ -notin $alreadyValidated }
+
+    $uniqueDomains = $newUsers | ForEach-Object {
+        ($_ -split '@')[1]
     } | Sort-Object -Unique
 
-    # Hash table to track valid domains
     $validDomains = @{}
 
-    # Check each unique domain
     foreach ($domain in $uniqueDomains) {
-        # If the domain is already cached, skip the retrieval process
         if ($global:domainCache.ContainsKey($domain)) {
-            Write-Host "Domain $domain already cached."
-            $validDomains[$domain] = $global:domainCache[$domain]  # Add cached domain to valid list
+            $validDomains[$domain] = $global:domainCache[$domain]
             continue
         }
 
-        # Initialize variables for tenant information
         $tenantId = $null
         $tenantName = $domain.Split('.')[0] + ".onmicrosoft.com"
-
-        # Microsoft OpenID Configuration Endpoint to retrieve the Tenant ID
         $metadataUrl = "https://login.microsoftonline.com/$domain/.well-known/openid-configuration"
-        $response = $null
-        $ErrorActionPreference = 'silentlycontinue'
 
         try {
-            $response = Invoke-RestMethod -Uri $metadataUrl -TimeoutSec 10 -ErrorAction Stop -ErrorVariable err
-            $errString = $err | Out-String
-        } catch {
-            Write-Warning "Failed to retrieve metadata for $domain. Skipping domain and associated users."
-            continue  # Skip to the next domain if the lookup fails
-        }
-
-        # Process the response if valid
-        if ($response -and $response.issuer) {
-            try {
-                # Extract Tenant ID
+            $response = Invoke-RestMethod -Uri $metadataUrl -TimeoutSec 10 -ErrorAction Stop
+            if ($response.issuer) {
                 $tenantId = ($response.issuer -split '/')[3]
                 Write-Host "Caching domain $domain with Tenant ID: $tenantId."
                 $global:domainCache[$domain] = @{
-                    "tenant ID" = $tenantId
+                    "tenant ID"   = $tenantId
                     "tenant name" = $tenantName
                 }
-                $validDomains[$domain] = $global:domainCache[$domain]  # Mark as valid
-            } catch {
-                Write-Warning "Failed to extract Tenant ID from issuer for $domain."
+                $validDomains[$domain] = $global:domainCache[$domain]
             }
-        } else {
-            Write-Warning "Invalid or missing tenant information for $domain. Skipping."
+        } catch {
+            Write-Warning "Failed to retrieve metadata for $domain. Skipping domain and its users."
         }
     }
 
-    # Filter users by valid domains
-    $validUsers = $users | Where-Object {
+    $validUsers = $newUsers | Where-Object {
         $domain = ($_ -split '@')[1]
         $validDomains.ContainsKey($domain)
     }
+    if ($validUsers.Count -gt 0) {
+        Add-Content -Path $validatedUsersFile -Value $validUsers
+    }
 
-    # Export valid users to a text file without headers and quotes
-    $validUsers | Out-File -FilePath ".\validated_users.txt" -Force
+    $global:domainCache | ConvertTo-Json -Depth 10 | Out-File -FilePath $cacheFile -Force
 
-    # Return the final output with domains at the top level
     return $validDomains
 }
