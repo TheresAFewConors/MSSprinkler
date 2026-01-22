@@ -35,7 +35,7 @@ MSSprinkler is a password spraying utility for organizations to test their Micro
 - [Disclaimer](#disclaimer)
 
 ## Description
-MSSprinkler is written in PowerShell and can be imported directly as a module. It has no other dependencies. MSSprinkler relies on the verbose error messaging provided by Microsoft to identify additional information beyond standard password spray success or failed authentication attempts, which allows for the gathering of additional information related to the user account. MSSprinkler also allows for a configurable threshold to prevent locking out accounts by mistake. By default, this is set to 8 (n-2 under Microsoft's default) however this can be adjusted based on the organizations lockout policy. Additionally, successful sign-in to an account with MFA enabled will not produce an MFA push to the user, allowing for covert information gathering.
+MSSprinkler is written in PowerShell and can be imported directly as a module. It has no other dependencies. MSSprinkler relies on the verbose error messaging provided by Microsoft to identify additional information beyond standard password spray success or failed authentication attempts, which allows for the gathering of additional information related to the user account. MSSprinkler also allows for a configurable threshold to prevent locking out accounts by mistake. By default, this is set to 8 (n-2 under Microsoft's default) however this can be adjusted based on the organizations lockout policy. Additionally, successful sign-in to an account with MFA enabled will not produce an MFA push to the user, allowing for non-disruptive information gathering.
 
 ![](/images/Animation.gif)
 
